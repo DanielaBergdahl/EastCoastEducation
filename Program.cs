@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using EastCoastEducation.Data;
+using EastCoastEducation.Interfaces;
+using EastCoastEducation.Repository;
 
 namespace EastCoastEducation
 {
@@ -12,7 +14,9 @@ namespace EastCoastEducation
             // Add services to the container.
 
             builder.Services.AddControllers()
-                .AddNewtonsoftJson(x =>x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); 
+                .AddNewtonsoftJson(x =>x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
 
