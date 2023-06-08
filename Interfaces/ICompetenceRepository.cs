@@ -4,8 +4,8 @@ namespace EastCoastEducation.Interfaces
 {
     public interface ICompetenceRepository
     {
-        ICollection<Competence> GetCompetences();
+        ICollection<Competence> GetAllCompetences();
         Competence GetCompetence(int id);
-        bool CompetenceExists(int id); 
-    }
+        bool CompetenceExists(int id);
+    } 
 }

@@ -9,6 +9,7 @@ namespace EastCoastEducation.Helper
         public MappingProfiles()
         {
             CreateMap<Course, CourseDto>();
+            CreateMap<Competence, CompetenceDto>();
         }
     }
 }
