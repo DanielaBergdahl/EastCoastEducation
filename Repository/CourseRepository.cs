@@ -52,5 +52,18 @@ namespace EastCoastEducation.Repository
         {
             return _context.Courses.Any(c => c.CourseId == courseId);
         }
+
+        public bool CreateCourse(Course course)
+        {
+            _context.Add(course);
+            return Save();
+        }
+
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
     }
 }

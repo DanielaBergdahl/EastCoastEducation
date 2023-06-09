@@ -10,6 +10,11 @@ namespace EastCoastEducation.Helper
         {
             CreateMap<Course, CourseDto>();
             CreateMap<Competence, CompetenceDto>();
+            CreateMap<CourseDto, Course>(); // Kan tas bort?TODO att testa
+            CreateMap<Student, StudentDto>();
+            CreateMap<StudentDto, Student>();
+
+
         }
     }
 }

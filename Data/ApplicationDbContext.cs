@@ -1,5 +1,7 @@
-﻿using EastCoastEducation.Model;
+﻿using Azure;
+using EastCoastEducation.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace EastCoastEducation.Data
 {
@@ -32,14 +34,22 @@ namespace EastCoastEducation.Data
             //    .HasForeignKey(c => c.CourseId);
             ////----------------------------------------------------------
 
+            modelBuilder.Entity<StudentCourse>()
+                .HasKey(sc => new { sc.StudentId, sc.CourseId });
+
             modelBuilder.Entity<Student>()
                 .HasMany(e => e.Courses)
                 .WithMany(e => e.Students)
-                .UsingEntity<StudentCourse>(
-l => l.HasOne<Course>().WithMany(e => e.StudentCourses),
-r => r.HasOne<Student>().WithMany(e => e.StudentCourses));
+                .UsingEntity(
+                    "StudentCourse",
+            l => l.HasOne(typeof(Course)).WithMany().HasForeignKey("CoursesId").HasPrincipalKey(nameof(Course.CourseId)),
+            r => r.HasOne(typeof(Student)).WithMany().HasForeignKey("StudentsId").HasPrincipalKey(nameof(Student.StudentId)),
+            j => j.HasKey("StudentsId", "CoursesId"));
 
-            
+
+
+
+
             ////Teacher and Competence relationship...according to tutorial 1--------------
             //modelBuilder.Entity<TeacherCompetence>()
             //    .HasKey(tc => new { tc.TeacherId, tc.CompetenceId });
@@ -54,19 +64,26 @@ r => r.HasOne<Student>().WithMany(e => e.StudentCourses));
             //    .WithMany(tc => tc.TeacherCompetences)
             //    .HasForeignKey(c => c.CompetenceId);
             ////---------------------------------------------------------------------
-            
+
+            modelBuilder.Entity<TeacherCompetence>()
+                .HasKey(tc => new { tc.TeacherId, tc.CompetenceId });
+
+
             modelBuilder.Entity<Teacher>()
                 .HasMany(f => f.Competences)
                 .WithMany(f => f.Teachers)
-                .UsingEntity<TeacherCompetence>(
-l => l.HasOne<Competence>().WithMany(e => e.TeacherCompetences),
-r => r.HasOne<Teacher>().WithMany(e => e.TeacherCompetences));
+                .UsingEntity(
+                    "TeacherCompetence",
+                        l => l.HasOne(typeof(Competence)).WithMany().HasForeignKey("CompetencesId").HasPrincipalKey(nameof(Competence.CompetenceId)),
+            r => r.HasOne(typeof(Teacher)).WithMany().HasForeignKey("TeachersId").HasPrincipalKey(nameof(Teacher.TeacherId)),
+            j => j.HasKey("TeachersId", "CompetencesId"));
+
 
             modelBuilder.Entity<Course>()
                 .HasOne(e => e.Teacher)
                 .WithMany(e => e.Courses)
                 .HasForeignKey(e => e.TeacherId)
-                .IsRequired();
+                .IsRequired(false);
         }
          
     }

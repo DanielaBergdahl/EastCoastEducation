@@ -3,6 +3,7 @@ using System;
 using EastCoastEducation.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EastCoastEducation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609075822_MadeCoursePropertiesNullable")]
+    partial class MadeCoursePropertiesNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
@@ -60,6 +63,7 @@ namespace EastCoastEducation.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("TeacherId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.HasKey("CourseId");
@@ -198,7 +202,9 @@ namespace EastCoastEducation.Migrations
                 {
                     b.HasOne("EastCoastEducation.Model.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });

@@ -48,7 +48,43 @@ namespace EastCoastEducation.Controllers
             return Ok(course);
         }
 
-            
+        //Add Post
+        [HttpPost]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+
+        //TODO -Ta bort studentId. Det ska gå att skapa en kurs utan att registrera en student på den. 
+        //Detta är just nu en mall för hur post student.
+        public IActionResult CreateCourse([FromBody] CourseDto courseCreate)
+        {
+            if (courseCreate == null)
+                return BadRequest(ModelState);
+
+            var courses = _courseRepository.GetAllCourses()
+                .Where(c => c.CourseTitle.Trim().ToUpper() == courseCreate.CourseTitle.TrimEnd().ToUpper())
+                .FirstOrDefault();
+
+            if (courses != null)
+            {
+                ModelState.AddModelError("", "Course already exists");
+                return StatusCode(422, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var courseMap = _mapper.Map<Course>(courseCreate);
+
+            if (!_courseRepository.CreateCourse(courseMap))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Successfully created");
+        }
+
+
 
     }
 }

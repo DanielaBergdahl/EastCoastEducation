@@ -15,8 +15,9 @@ namespace EastCoastEducation.Interfaces
         //nummer kategori detaljer
         Course GetCourseByNumber(int number);
         Course GetCourseByDetails(string details);
-        Course GetCourseByLength(string length); 
-
+        Course GetCourseByLength(string length);
+        bool CreateCourse(Course course);
+        bool Save();
 
 
     }
