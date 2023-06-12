@@ -65,5 +65,10 @@ namespace EastCoastEducation.Repository
             return saved > 0 ? true : false;
         }
 
+        public bool UpdateCourse(Course course)
+        {
+            _context.Update(course);
+            return Save();
+        }
     }
 }

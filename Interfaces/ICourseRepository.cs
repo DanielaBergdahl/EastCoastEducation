@@ -7,6 +7,9 @@ namespace EastCoastEducation.Interfaces
         ICollection<Course> GetAllCourses();
         Course GetCourse(int id);
         bool CourseExists(int id);
+        bool CreateCourse(Course course);
+        bool UpdateCourse(Course course);
+        bool Save();
 
         //Kanske ej använder nedanstående metoder, de kan vara helt fel
         Course GetCourse(string title);
@@ -15,8 +18,6 @@ namespace EastCoastEducation.Interfaces
         Course GetCourseByNumber(int number);
         Course GetCourseByDetails(string details);
         Course GetCourseByLength(string length);
-        bool CreateCourse(Course course);
-        bool Save();
 
 
     }
