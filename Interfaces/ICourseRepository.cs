@@ -8,7 +8,6 @@ namespace EastCoastEducation.Interfaces
         Course GetCourse(int id);
         bool CourseExists(int id);
 
-
         //Kanske ej använder nedanstående metoder, de kan vara helt fel
         Course GetCourse(string title);
         Course GetCourseByCategory(string category);

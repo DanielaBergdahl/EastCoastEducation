@@ -1,4 +1,6 @@
-﻿namespace EastCoastEducation.Dto
+﻿using EastCoastEducation.Model;
+
+namespace EastCoastEducation.Dto
 {
     public class StudentDto
     {
@@ -8,6 +10,5 @@
         public string Email { get; set; }
         public string MobilePhone { get; set; }
         public string Address { get; set; }
-
     }
 }

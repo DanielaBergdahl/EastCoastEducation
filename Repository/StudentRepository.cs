@@ -32,18 +32,19 @@ namespace EastCoastEducation.Repository
         }
 
         //POST METHODS
-        public bool CreateStudent(int courseId, Student student)
+        //public bool CreateStudent(int courseId, Student student)
+        public bool CreateStudent(Student student)
         {
-            var studentCourseEntity = _context.Courses.Where
-                (a => a.CourseId == courseId).FirstOrDefault();
+            //var studentCourseEntity = _context.Courses.Where
+            //    (a => a.CourseId == courseId).FirstOrDefault();
 
-            var studentCourse = new StudentCourse()
-            {
-                Course = studentCourseEntity,
-                Student = student,
-            };
+            //var studentCourse = new StudentCourse()
+            //{
+            //    Course = studentCourseEntity,
+            //    Student = student,
+            //};
 
-            _context.Add(studentCourse); // Gör att ´även kopplingstabellen populeras
+            //_context.Add(studentCourse); // Gör att ´även kopplingstabellen populeras
 
             _context.Add(student);
             return Save();
@@ -54,7 +55,5 @@ namespace EastCoastEducation.Repository
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
-
-
     }
 }

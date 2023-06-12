@@ -53,11 +53,11 @@ namespace EastCoastEducation.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-
-
         //En mall för Teacher som ska skapas samtidigt som relationen till en kurs läggs till +
         // relationen till kompetens
-        public IActionResult CreateStudent([FromQuery] int courseId, [FromBody] StudentDto studentCreate)
+        //public IActionResult CreateStudent([FromQuery] int courseId, [FromBody] StudentDto studentCreate)
+        //public IActionResult CreateStudent([FromBody] int courseId, [FromBody] StudentDto studentCreate)
+        public IActionResult CreateStudent([FromBody] StudentDto studentCreate)
         {
             if (studentCreate == null)
                 return BadRequest(ModelState);
@@ -77,7 +77,8 @@ namespace EastCoastEducation.Controllers
 
             var studentMap = _mapper.Map<Student>(studentCreate);
 
-            if (!_studentRepository.CreateStudent(courseId, studentMap))
+            //if (!_studentRepository.CreateStudent(courseId, studentMap))
+            if (!_studentRepository.CreateStudent(studentMap))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -85,8 +86,6 @@ namespace EastCoastEducation.Controllers
 
             return Ok("Successfully created");
         }
-
-
 
     }
 }
