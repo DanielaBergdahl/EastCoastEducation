@@ -10,7 +10,7 @@ using EastCoastEducation.Model;
 
 namespace EastCoastEducation.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TeachersController : ControllerBase
     {
