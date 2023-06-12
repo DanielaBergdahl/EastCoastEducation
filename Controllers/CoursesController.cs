@@ -52,9 +52,6 @@ namespace EastCoastEducation.Controllers
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-
-        //TODO -Ta bort studentId. Det ska gå att skapa en kurs utan att registrera en student på den. 
-        //Detta är just nu en mall för hur post student.
         public IActionResult CreateCourse([FromBody] CourseDto courseCreate)
         {
             if (courseCreate == null)

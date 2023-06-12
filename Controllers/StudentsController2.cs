@@ -54,6 +54,9 @@ namespace EastCoastEducation.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
 
+
+        //En mall för Teacher som ska skapas samtidigt som relationen till en kurs läggs till +
+        // relationen till kompetens
         public IActionResult CreateStudent([FromQuery] int courseId, [FromBody] StudentDto studentCreate)
         {
             if (studentCreate == null)
