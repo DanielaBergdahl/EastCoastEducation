@@ -55,5 +55,11 @@ namespace EastCoastEducation.Repository
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
+
+        public bool UpdateStudent(Student student)
+        {
+            _context.Update(student);
+            return Save();
+        }
     }
 }

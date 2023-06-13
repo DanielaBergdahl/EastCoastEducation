@@ -9,6 +9,7 @@ namespace EastCoastEducation.Interfaces
         bool StudentExists(int id);
         //bool CreateStudent(int courseId, Student student);
         bool CreateStudent(Student student);
+        bool UpdateStudent(Student student);    
         bool Save();
 
     }

@@ -87,5 +87,31 @@ namespace EastCoastEducation.Controllers
             return Ok("Successfully created");
         }
 
+        [HttpPut("{studentId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+
+        public IActionResult UpdateStudent(int studentId, [FromBody] StudentDto updatedStudent)
+        {
+            if (updatedStudent == null)
+                return BadRequest(ModelState);
+
+            if (!_studentRepository.StudentExists(studentId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var studentMap = _mapper.Map<Student>(updatedStudent);
+
+            if (!_studentRepository.UpdateStudent(studentMap))
+            {
+                ModelState.AddModelError("", "Something went wrong when updating student");
+                return StatusCode(500, ModelState);
+            }
+
+            return NoContent();
+        }
     }
 }

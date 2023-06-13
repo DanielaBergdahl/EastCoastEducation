@@ -81,7 +81,8 @@ namespace EastCoastEducation.Controllers
             return Ok("Successfully created");
         }
 
-        [HttpPut("{courseId}")]
+        //[HttpPut("{courseId}")]
+        [HttpPut]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
