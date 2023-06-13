@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using EastCoastEducation.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using EastCoastEducation.Model;
+using EastCoastEducation.Interfaces;
+using EastCoastEducation.Dto;
+using AutoMapper;
 
 namespace EastCoastEducation.Controllers
 {
@@ -14,111 +10,65 @@ namespace EastCoastEducation.Controllers
     [ApiController]
     public class TeachersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITeacherRepository _teacherRepository;
+        private readonly IMapper _mapper;
 
-        public TeachersController(ApplicationDbContext context)
+        public TeachersController(ITeacherRepository teacherRepository, IMapper mapper)
         {
-            _context = context;
+            _teacherRepository = teacherRepository;
+            _mapper = mapper;
         }
 
         // GET: api/Teachers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Teacher>>> GetTeachers()
         {
-          if (_context.Teachers == null)
-          {
-              return NotFound();
-          }
-            return await _context.Teachers.ToListAsync();
+          return Ok(await _teacherRepository.GetTeachers());
         }
 
         // GET: api/Teachers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Teacher>> GetTeacher(int id)
         {
-          if (_context.Teachers == null)
-          {
-              return NotFound();
-          }
-            var teacher = await _context.Teachers.FindAsync(id);
-
-            if (teacher == null)
+            var result = await _teacherRepository.GetTeacher(id);
+            if (result is null)
             {
                 return NotFound();
             }
 
-            return teacher;
+            return Ok(result);
         }
 
         // PUT: api/Teachers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTeacher(int id, Teacher teacher)
+        public async Task<IActionResult> PutTeacher(TeacherDto teacherDto)
         {
-            if (id != teacher.TeacherId)
+            try
+            {
+                await _teacherRepository.UpdateTeacher(_mapper.Map<Teacher>(teacherDto));
+                return NoContent();
+            }
+            catch (Exception)
             {
                 return BadRequest();
             }
-
-            _context.Entry(teacher).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TeacherExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
         }
 
         // POST: api/Teachers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Teacher>> PostTeacher(Teacher teacher)
+        public ActionResult<Teacher> PostTeacher(TeacherDto teacherDto)
         {
-          if (_context.Teachers == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Teachers'  is null.");
-          }
-            _context.Teachers.Add(teacher);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTeacher", new { id = teacher.TeacherId }, teacher);
-        }
-
-        // DELETE: api/Teachers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTeacher(int id)
-        {
-            if (_context.Teachers == null)
+            try
             {
-                return NotFound();
+                var createdTeacher = _teacherRepository.CreateTeacher(_mapper.Map<Teacher>(teacherDto));
+                return Ok(createdTeacher);
             }
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null)
+            catch (Exception)
             {
-                return NotFound();
+                return BadRequest();
             }
-
-            _context.Teachers.Remove(teacher);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool TeacherExists(int id)
-        {
-            return (_context.Teachers?.Any(e => e.TeacherId == id)).GetValueOrDefault();
         }
     }
 }
