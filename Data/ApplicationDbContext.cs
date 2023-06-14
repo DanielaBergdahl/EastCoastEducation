@@ -16,7 +16,7 @@ namespace EastCoastEducation.Data
         public DbSet<StudentCourse> StudentsCourses { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TeacherCompetence> TeachersCompetences { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+        //public DbSet<Admin> Admins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,8 +47,8 @@ namespace EastCoastEducation.Data
             r => r.HasOne(typeof(Student)).WithMany().HasForeignKey("StudentsId").HasPrincipalKey(nameof(Student.StudentId)),
             j => j.HasKey("StudentsId", "CoursesId"));
 
-            modelBuilder.Entity<Admin>()
-                .HasKey(sc => new {sc.AdminId});
+            //modelBuilder.Entity<Admin>()
+            //    .HasKey(sc => new {sc.AdminId});
 
             ////Teacher and Competence relationship...according to tutorial 1--------------
             //modelBuilder.Entity<TeacherCompetence>()
