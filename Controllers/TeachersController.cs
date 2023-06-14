@@ -41,12 +41,26 @@ namespace EastCoastEducation.Controllers
 
         // PUT: api/Teachers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutTeacher(TeacherDto teacherDto)
+        //{
+        //    try
+        //    {
+        //        await _teacherRepository.UpdateTeacher(_mapper.Map<Teacher>(teacherDto));
+        //        return NoContent();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTeacher(TeacherDto teacherDto)
+        public IActionResult PutTeacher(TeacherDto teacherDto)
         {
             try
             {
-                await _teacherRepository.UpdateTeacher(_mapper.Map<Teacher>(teacherDto));
+                var updatedTeacher = _teacherRepository.UpdateTeacher(_mapper.Map<Teacher>(teacherDto));
                 return NoContent();
             }
             catch (Exception)
@@ -54,6 +68,7 @@ namespace EastCoastEducation.Controllers
                 return BadRequest();
             }
         }
+
 
         // POST: api/Teachers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

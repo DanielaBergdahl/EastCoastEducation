@@ -7,9 +7,9 @@ namespace EastCoastEducation.Interfaces
         Task<IEnumerable<Teacher>> GetTeachers();
         Task<Teacher?> GetTeacher(int id);
         Task<bool> TeacherExists(int id);
-        Teacher CreateTeacher(Teacher teacher);
-        Task UpdateTeacher(Teacher teacher);
-        Task Save();
+        bool CreateTeacher(Teacher teacher);
+        bool UpdateTeacher(Teacher teacher);
+        bool Save();
         void Delete(Teacher teacher);
     }
 }

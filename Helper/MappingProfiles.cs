@@ -14,7 +14,7 @@ namespace EastCoastEducation.Helper
             CreateMap<Student, StudentDto>();
             CreateMap<StudentDto, Student>();
             CreateMap<Teacher, TeacherDto>();
-
+            CreateMap<TeacherDto, Teacher>();
 
         }
     }

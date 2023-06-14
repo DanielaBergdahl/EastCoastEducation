@@ -19,6 +19,7 @@ namespace EastCoastEducation
             builder.Services.AddScoped<ICourseRepository, CourseRepository>();
             builder.Services.AddScoped<ICompetenceRepository, CompetenceRepository>();
             builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+            builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("WebApiDatabase")));
