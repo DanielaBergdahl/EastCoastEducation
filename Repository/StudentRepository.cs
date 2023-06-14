@@ -31,8 +31,6 @@ namespace EastCoastEducation.Repository
             return _context.Students.Any(s => s.StudentId == studentId);
         }
 
-        //POST METHODS
-        //public bool CreateStudent(int courseId, Student student)
         public bool CreateStudent(Student student)
         {
             //var studentCourseEntity = _context.Courses.Where

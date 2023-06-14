@@ -14,9 +14,6 @@ namespace EastCoastEducation.Repository
             _context = context;
         }
 
-        //public Teacher CreateTeacher(Teacher teacher)
-        //    => _context.Teachers.Add(teacher).Entity;
-
         public bool CreateTeacher(Teacher teacher)
         {
             _context.Add(teacher);
@@ -35,17 +32,7 @@ namespace EastCoastEducation.Repository
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
         }
-        //public async Task Save()
-        //{
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return NotFound;
-        //    }
-        //}
+       
         public async Task<bool> TeacherExists(int id)
         {
             var result = await _context.Teachers.FindAsync(id);
@@ -56,17 +43,6 @@ namespace EastCoastEducation.Repository
             return true;
         }
 
-        //public async Task UpdateTeacher(Teacher teacher)
-        //{
-        //    if (GetTeacher(teacher.TeacherId) is null)
-        //    {
-        //        return;
-        //    }
-
-        //    _context.Entry(teacher).State = EntityState.Modified;
-
-        //    await Save();
-        //}
         public bool UpdateTeacher(Teacher teacher)
         {
             _context.Update(teacher);
